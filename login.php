@@ -15,9 +15,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $result = mysqli_query($db, $query);
     if(mysqli_num_rows($result) == 1){
       $row = mysqli_fetch_array($result);
-      $_SESSION['user_id'] = $row['id'];
+      $_SESSION['user_id'] = $row['id_num'];
       $_SESSION['username'] = $row['fullname'];
-      $_SESSION['status'] = $row['status'];
+      $_SESSION['status'] = $row['user_status'];
       if($_SESSION['status'] == 0){
       sendReply(400, "Account Not Verified, Check Back Later!");
       }
