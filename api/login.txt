@@ -1,0 +1,42 @@
+POST http://edu-alert.epizy.com/login.php
+
+admin login{
+email = "admin@edualert.com";
+password = "admin12345";
+}
+
+
+POST http://edu-alert.epizy.com/student_register.php
+
+student_register{
+fullname = "";
+user_id = "";
+institute = "";
+department = "";
+level = "";
+mode = "";
+phone = "";
+email = "";
+password = "";
+cpassword = "";
+
+//there are two other fields but they are being handled from the backend
+//they are 'access_level' and 'status'
+//student's default status is 1 and access_level is student
+}
+
+
+POST http://edu-alert.epizy.com/staff_register.php
+
+staff_register{
+fullname = "";
+user_id = "";
+phone = "";
+email = "";
+password = "";
+cpassword = "";
+
+//there are two other fields but they are being handled from the backend
+//they are 'access_level' and 'status'
+//staff's default status is 0 and access_level is staff
+}
