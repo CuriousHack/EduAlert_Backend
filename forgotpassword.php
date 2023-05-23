@@ -56,7 +56,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
   $mail->Subject="EduAlert Password Reset";
   $mail->Body="<b>Dear Subscriber</b>
   <h3>We received a request to reset your password.</h3>
-  <p>Hi there, click on this <a href=\"resetpassword.php?token=" . $token . "\">link</a> to reset your password on EduAlert</p>
+  <p>Hi there, click on this <a href=\"http://localhost/edualert_backend/EduAlert_Backend/resetpassword.php?token=" . $token . "\">link</a> to reset your password on EduAlert</p>
   <br><br>
   <p>With regrads,</p>
   <b>EduAlert Team</b>";
