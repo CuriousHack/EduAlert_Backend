@@ -11,10 +11,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     // Grab to token that came from the email link
     //$token = $_SESSION['token'];
     if (empty($password) || empty($cpassword)) {
-        sendReply(400, "Password is required");
+        echo json_encode(array('error' => 'All Fields are Required!'));
+        exit();
     }
     if ($password !== $cpassword) {
-        sendReply(400, "Password do not match");
+        echo json_encode(array('error' => 'Password do not Match!'));
+        exit();
     }
     if(isset($_GET['token'])){
         $token = mysqli_real_connect($_GET['token']);
@@ -28,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         $password = md5($password);
         $sql = "UPDATE records SET password='$password' WHERE email='$email'";
         $results = mysqli_query($db, $sql);
-        sendReply(200, "Password Reset Successful!");
+        echo json_encode(array('success' => 'Password Reset Successful!'));
       }
     }
       

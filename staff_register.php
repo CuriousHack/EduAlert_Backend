@@ -14,11 +14,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
     //validating the user input
     if(empty($fullname) || empty($id_num) || empty($email) || empty($phone) || empty($password) || empty($cpassword)){
-        sendReply(400, "All Fields are required");
+        echo json_encode(array('error' => 'All Fields are Required!'));
+        exit();
     }
     //check if the two password matches(Case sensitivity included)
     if($password !== $cpassword){
-        sendReply(400, "Both password do not match");
+        echo json_encode(array('error' => 'Both Password do not Match!'));
+        exit();
     }
     //check if user already exist
     $user_check = "SELECT * FROM records where id_num='$id_num' or email='$email' LIMIT 1";
@@ -27,10 +29,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
   if($user){
     if($user['id_num'] === $id_num){
-      sendReply(400, "Staff ID already exist");
+      echo json_encode(array('error' => 'Staff ID Already Exist!'));
+      exit();
     }
     if($user['email'] === $email){
-      sendReply(400, "Email already exist");
+      echo json_encode(array('error' => 'Email Already Exist!'));
+      exit();
     }
   }
   //finally register the user if there are no error
@@ -39,7 +43,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     mysqli_query($db, $query);
     $_SESSION['user_id'] = $id_num;
     $_SESSION['fullname'] = $fullname;
-    sendReply(200, "Registration Successful! Your Account is Under Review.");
+    echo json_encode(array('success' => 'Registration Successful! Your Account is Under Review.'));
 }
 
 ?>

@@ -13,9 +13,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $results = mysqli_query($db, $query);
   
     if (empty($email)) {
-      sendReply(400, "Your email is required");
+      echo json_encode(array('error' => 'Email is Required!'));
+        exit();
     }else if(mysqli_num_rows($results) <= 0) {
-      sendReply(400, "Sorry, this email does not exist on EduAlert!");
+      echo json_encode(array('error' => 'Sorry, This Email Does not Exist on EduAlert!'));
+        exit();
     }
 
     // generate a unique random token of length 100
@@ -56,19 +58,18 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
   $mail->Subject="EduAlert Password Reset";
   $mail->Body="<b>Dear Subscriber</b>
   <h3>We received a request to reset your password.</h3>
-  <p>Hi there, click on this <a href=\"http://localhost/edualert_backend/EduAlert_Backend/resetpassword.php?token=" . $token . "\">link</a> to reset your password on EduAlert</p>
+  <p>Hi there, click on this <a href=\"https://edualert.skinx.skin/resetpassword.php?token=" . $token . "\">link</a> to reset your password on EduAlert</p>
   <br><br>
   <p>With regrads,</p>
   <b>EduAlert Team</b>";
 
-  $mail->send();
-
   //echo("Email sent!");
   if(!$mail->send()){
-    sendReply(400, "invalid Email Address!");
+    echo json_encode(array('error' => 'Invalid Email Address!'));
+        exit();
   }
   else{
-    sendReply(200,"Please login into your email account and click on the link we sent to reset your password");
+    echo json_encode(array('success' => 'Please login into your email account and click on the link we sent to reset your password'));
   }
   }
 
