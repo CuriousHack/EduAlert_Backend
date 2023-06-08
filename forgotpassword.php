@@ -56,7 +56,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
   // HTML body
   $mail->isHTML(true);
   $mail->Subject="EduAlert Password Reset";
-  $mail->Body="<b>Dear Subscriber</b>
+  //$mail->Body = file_get_contents("forgot.html");
+   $mail->Body="<b>Dear Subscriber</b>
   <h3>We received a request to reset your password.</h3>
   <p>Hi there, click on this <a href=\"https://edualert.skinx.skin/resetpassword.php?token=" . $token . "\">link</a> to reset your password on EduAlert</p>
   <br><br>

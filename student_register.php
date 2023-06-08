@@ -3,16 +3,19 @@
 include "./config.php";
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
-    $fullname = mysqli_real_escape_string($db, $_POST['fullname']);
-    $matric = mysqli_real_escape_string($db, $_POST['user_id']);
-    $institute = mysqli_real_escape_string($db,$_POST['institute']);
-    $department = mysqli_real_escape_string($db,$_POST['department']);
-    $level = mysqli_real_escape_string($db, $_POST['level']);
-    $mode = mysqli_real_escape_string($db,$_POST['mode']);
-    $phone = $_POST['phone'];
-    $email = mysqli_real_escape_string($db, $_POST['email']);
-    $password = mysqli_real_escape_string($db,$_POST['password']);
-    $cpassword = mysqli_real_escape_string($db,$_POST['cpassword']);
+  $jsonData = file_get_contents("php://input");
+    $data = json_decode($jsonData);
+ 
+    $fullname = mysqli_real_escape_string($db, $data->fullname);
+    $matric = mysqli_real_escape_string($db, $data->user_id);
+    $institute = mysqli_real_escape_string($db,$data->institute);
+    $department = mysqli_real_escape_string($db,$data->department);
+    $level = mysqli_real_escape_string($db, $data->level);
+    $mode = mysqli_real_escape_string($db,$data->mode);
+    $phone = $data->phone;
+    $email = mysqli_real_escape_string($db, $data->email);
+    $password = mysqli_real_escape_string($db, $data->password);
+    $cpassword = mysqli_real_escape_string($db, $data->cpassword);
     $access = "student";
     $status = 1;
 

@@ -2,14 +2,17 @@
 
 include "./config.php";
 
-include_once './jwt_util.php';
+require "./vendor/autoload.php";
+use \Firebase\JWT\JWT;
 
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
-  $data = json_decode(file_get_contents("php://input", true));
+    $jsonData = file_get_contents("php://input");
+    $data = json_decode($jsonData);
+ 
+    $email = mysqli_real_escape_string($db, $data->email);
+    $password = mysqli_real_escape_string($db, $data->password);
   
-    $email = mysqli_real_escape_string($db, $_POST['email']);
-    $password = mysqli_real_escape_string($db, $_POST['password']);
   if(empty($email) || empty($password)){
     echo json_encode(array('error' => 'All fields are required!'));
   }
@@ -20,17 +23,31 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $result = mysqli_query($db, $query);
     if(mysqli_num_rows($result) == 1){
       $row = mysqli_fetch_array($result);
-      $_SESSION['status'] = $row['user_status'];
-      if($_SESSION['status'] == 0){
+      $status = $row['user_status'];
+      if($status == 0){
       echo json_encode(array('error' => 'Acount Not Verified, Check back Later!'));
       }else{
-		
-		$headers = array('alg'=>'HS256','typ'=>'JWT');
-		$payload = array('id'=>$_SESSION['user_id'], 'exp'=>(time() + 60 * 60));
+        //generate JWT token
+        $iss = "Edualert";
+        $iat = time();
+        $nbf = $iat + 10;
+        $exp = $iat + 3600;
+        $aud = "Edualert_users";
 
-		$jwt = generate_jwt($headers, $payload);
+        $secret_key = "eDU_aLERT";
+        $payload = array(
+            "iss" => "Edualert",
+            "iat" => $iat,
+            "nbf" => $nbf,
+            "exp" => $exp,
+            "aud" => $aud,
+            "data" => array(
+                "id" => $row['id'],
+                "email" => $row['email']
+        ));
+        $jwt = JWT::encode($payload, $secret_key, "HS256");
     
-//get logged in user details
+    //get logged in user details
     $login_data = array(
       "success"=> true,
       "message"=> "Login successfully!",

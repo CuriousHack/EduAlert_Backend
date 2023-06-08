@@ -27,19 +27,19 @@ POST https://edualert.skinx.skin/staff_register.php
 
 staff_register
 {
-"fullname" : "";
-"user_id" : "";
-"phone" : "";
-"email" : "";
-"password" : "";
-"cpassword" : "";
+"fullname" : "",
+"user_id" : "",
+"phone" : "",
+"email" : "",
+"password" : "",
+"cpassword" : "",
 }
 
 POST https://edualert.skinx.skin/forgotpassword.php
 
 forgot password
 {
-    "email" : "";
+    "email" : "",
 }
 
 change password
@@ -64,4 +64,8 @@ POST https://edualert.skinx.skin/lec_create_notice.php
       "message": ""
   }
 
-  POST https://edualert.skinx.skin/lec_create_notice.php
+  student retrive notice
+  POST https://edualert.skinx.skin/student_notice.php
+{
+    "token" : "",
+}

@@ -3,12 +3,15 @@
 include "./config.php";
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
-    $fullname = mysqli_real_escape_string($db, $_POST['fullname']);
-    $id_num = mysqli_real_escape_string($db, $_POST['user_id']);
-    $email = mysqli_real_escape_string($db, $_POST['email']);
-    $phone = $_POST['phone'];
-    $password = mysqli_real_escape_string($db,$_POST['password']);
-    $cpassword = mysqli_real_escape_string($db,$_POST['cpassword']);
+  $jsonData = file_get_contents("php://input");
+    $data = json_decode($jsonData);
+
+    $fullname = mysqli_real_escape_string($db, $data->fullname);
+    $id_num = mysqli_real_escape_string($db, $data->user_id);
+    $email = mysqli_real_escape_string($db, $data->email);
+    $phone = $data->phone;
+    $password = mysqli_real_escape_string($db,$data->password);
+    $cpassword = mysqli_real_escape_string($db,$data->cpassword);
     $access = "staff";
     $status = 0;
 
