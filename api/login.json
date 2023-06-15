@@ -69,3 +69,30 @@ POST https://edualert.skinx.skin/lec_create_notice.php
 {
     "token" : "",
 }
+
+Approve staff
+PUT https://edualert.skinx.skin/update_staff.php?id=""
+{
+  "token" : "",
+}
+
+Unapproved staff list
+POST https://edualert.skinx.skin/staff_list.php
+{
+    "token" : "",
+  }
+
+  Approved staff list
+POST https://edualert.skinx.skin/approved_staff.php
+{
+    "token" : "",
+  }
+
+Admin create course
+POST https://edualert.skinx.skin/create_course.php
+  {
+    "token": "",
+    "title" : "",
+    "code" : "",
+    "lecturer" : ""
+}

@@ -5,8 +5,10 @@ include "./config.php";
 //enter new password
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
-    $password = mysqli_real_escape_string($db, $_POST['password']);
-    $cpassword = mysqli_real_escape_string($db, $_POST['cpassword']);
+  $jsonData = file_get_contents("php://input");
+    $data = json_decode($jsonData);
+    $password = mysqli_real_escape_string($db, $data->password);
+    $cpassword = mysqli_real_escape_string($db, $data->cpassword);
   
     // Grab to token that came from the email link
     //$token = $_SESSION['token'];
@@ -18,23 +20,28 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         echo json_encode(array('error' => 'Password do not Match!'));
         exit();
     }
-    if(isset($_GET['token'])){
-        $token = mysqli_real_connect($_GET['token']);
-
+    $token = $_GET['token'];
+      
         // select email address of user from the password_reset table 
       $sql = "SELECT email FROM password_resets WHERE token='$token' LIMIT 1";
       $results = mysqli_query($db, $sql);
-      $email = mysqli_fetch_assoc($results)['email'];
-
-      if ($email) {
+      $query = mysqli_fetch_assoc($results);
+  
+      if (!$query) {
+        echo json_encode(array('error'=> 'Mail not sent'));
+      }
+      else{
+        $email = $query['email'];
         $password = md5($password);
         $sql = "UPDATE records SET password='$password' WHERE email='$email'";
         $results = mysqli_query($db, $sql);
-        echo json_encode(array('success' => 'Password Reset Successful!'));
+        if(!$results){
+          echo json_encode(array('error' => 'Unable to complete request, please try again in few minutes.'));
+        }
+        else{
+          echo json_encode(array('success' => 'Password Reset Successful!'));
+        }
       }
-    }
-      
-  
-      
-    }
+        
+}
   ?>
