@@ -13,13 +13,13 @@ $mail->SMTPAuth=true;
 $mail->SMTPSecure='tls';
 
 // email account
-$mail->Username='akandelateef0@gmail.com';
-$mail->Password='imtquujsskqfnlfj';
+$mail->Username='SMTP CREDENTIALS ';
+$mail->Password='SMTP CREDENTIALS';
 
-//edualertsys@gmail.com login
-// zkfnvsqnmfgkigvf
 
-//lateefs login
-// imtquujsskqfnlfj
+
+
+
+
 ?>
 
