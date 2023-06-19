@@ -2,9 +2,11 @@
     "require": {
         "phpmailer/phpmailer": "^6.8",
         "firebase/php-jwt": "^6.5"
+    },
+    "scripts": {
         "post-install-cmd": [
-             "php artisan clear-compiled",
-             "chmod -R 777 public/"
-         ]
+            "php artisan clear-compiled",
+            "chmod -R 777 public/"
+        ]
     }
 }
