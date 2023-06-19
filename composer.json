@@ -4,3 +4,7 @@
         "firebase/php-jwt": "^6.5"
     }
 }
+"post-install-cmd": [
+     "php artisan clear-compiled",
+     "chmod -R 777 public/"
+ ]
